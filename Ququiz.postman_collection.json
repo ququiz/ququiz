@@ -1,0 +1,406 @@
+{
+	"info": {
+		"_postman_id": "806bada8-3dda-4636-9d11-8bd79b7b53b1",
+		"name": "Ququiz",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22922994"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();",
+									"var userid = responseJson.data.user.id;",
+									"pm.environment.set(\"userId\", userid)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullname\": \"Adam\",\n    \"email\": \"alexadam@gmail.com\",\n    \"username\": \"adam\",\n    \"password\": \"Adam123(\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}:{{auth_port}}/users",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{auth_port}}",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();",
+									"var accessToken = responseJson.data.accessToken;",
+									"var refreshToken = responseJson.data.refreshToken;",
+									"pm.environment.set(\"accessToken\", accessToken);",
+									"pm.environment.set(\"refreshToken\", refreshToken);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"alexanderadam\",\n    \"password\": \"Adam123(\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}:{{auth_port}}/authentications",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{auth_port}}",
+							"path": [
+								"authentications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"refreshToken\": {{refreshToken}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}:{{auth_port}}/authentications",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{auth_port}}",
+							"path": [
+								"authentications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"refreshToken\": {{refreshToken}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}:{{auth_port}}/authentications",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{auth_port}}",
+							"path": [
+								"authentications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}:{{auth_port}}/users/{{userId}}",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{auth_port}}",
+							"path": [
+								"users",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Quiz",
+			"item": [
+				{
+					"name": "Create Quiz",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();",
+									"var quiz_id = responseJson.data.created_quiz.id;",
+									"pm.environment.set(\"quiz_id\", quiz_id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"string\",\n  \"start_time\": \"2024-05-19T10:00:00.000Z\", // DATE\n  \"end_time\": \"2024-05-30T12:00:00.000Z\", // DATE\n  \"questions\": [{\n    \"question\": \"string\",\n    \"type\": \"MULTIPLE\", // ENUM(\"MULTIPLE\", \"ESSAY\")\n    \"weight\": 3,\n    \"choices\": [\n      {\n        \"text\": \"string\",\n        \"is_correct\": true // DEFAULT FALSE\n      },\n      {\n        \"text\": \"string2\",\n        \"is_correct\": false // DEFAULT FALSE\n      }\n    ]\n  },\n  {\n    \"question\": \"string\",\n    \"type\": \"ESSAY\", // ENUM(\"MULTIPLE\", \"ESSAY\")\n    \"weight\": 10,\n    \"essay_answer\": \"string\" // Will be used if type is \"ESSAY\"\n  }\n  ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}:3000/quiz/",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "3000",
+							"path": [
+								"quiz",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Quiz",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ // ALL PROPERTIES ARE OPTIONAL BTW\n  \"title\": \"string\",\n  \"start_time\": \"2024-05-19T10:00:00.000Z\", // DATE\n  \"end_time\": \"2024-05-30T12:00:00.000Z\", // DATE\n  \"questions\": [{\n    \"question\": \"string\",\n    \"type\": \"MULTIPLE\", // ENUM(\"MULTIPLE\", \"ESSAY\")\n    \"weight\": 3,\n    \"choices\": [\n      {\n        \"text\": \"string\",\n        \"is_correct\": true // DEFAULT FALSE\n      },\n      {\n        \"text\": \"string2\",\n        \"is_correct\": false // DEFAULT FALSE\n      }\n    ]\n  },\n  {\n    \"question\": \"string\",\n    \"type\": \"ESSAY\", // ENUM(\"MULTIPLE\", \"ESSAY\")\n    \"weight\": 10,\n    \"essay_answer\": \"string\" // Will be used if type is \"ESSAY\"\n  }\n  ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}:{{quiz_port}}/quiz/{{quiz_id}}",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{quiz_port}}",
+							"path": [
+								"quiz",
+								"{{quiz_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Join Quiz",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}:3000/quiz/{{quiz_id}}/start",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "3000",
+							"path": [
+								"quiz",
+								"{{quiz_id}}",
+								"start"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add New Participant",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"participant_id\": 123\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}:{{quiz_port}}/quiz/{{quiz_id}}/participant",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{quiz_port}}",
+							"path": [
+								"quiz",
+								"{{quiz_id}}",
+								"participant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Quiz by Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}:{{quiz_port}}/quiz/{{quiz_id}}",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{quiz_port}}",
+							"path": [
+								"quiz",
+								"{{quiz_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Start Quiz (Force start all if owner, else start their own)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}:{{quiz_port}}/quiz/{{quiz_id}}/start",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{quiz_port}}",
+							"path": [
+								"quiz",
+								"{{quiz_id}}",
+								"start"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
