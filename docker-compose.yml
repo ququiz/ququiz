@@ -29,6 +29,40 @@ services:
       - postgres
     networks:
       - ququiz
+  mongodb:
+    container_name: 'ququiz-mongo'
+    image: 'mongo:latest'
+    ports:
+      - '27017:27017'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+    env_file:
+      - ./.env
+  dkron:
+    image: dkron/dkron
+    ports:
+      - '9911:8080'
+    command: agent --server --bootstrap-expect=1 --node-name=node1
+    environment:
+      - DKRON_BACKEND_MACHINE_URL=dkron://dkron:8946
+    restart: always
+  quiz:
+    container_name: "ququiz-quiz"
+    image: 'alexadamm/ququiz-quiz:v1.0'
+    ports:
+      - 3502:3000
+    env_file:
+      - ./.env
+    volumes:
+      - ./src:/app/src
+    depends_on:
+      - authentications
+      - ququiz
+      - dkron
+      - mongodb
+    networks:
+      - ququiz
 networks:
   ququiz:
 
