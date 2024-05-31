@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "806bada8-3dda-4636-9d11-8bd79b7b53b1",
+		"_postman_id": "d396e14a-4350-42ad-ba08-bfa7f5a8e41f",
 		"name": "Ququiz",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "22922994"
+		"_exporter_id": "30538133",
+		"_collection_link": "https://orange-comet-51695.postman.co/workspace/netflik~35c0e208-27dd-4c2a-a67f-44e4ee221c8b/collection/30538133-d396e14a-4350-42ad-ba08-bfa7f5a8e41f?action=share&source=collection_link&creator=30538133"
 	},
 	"item": [
 		{
@@ -74,7 +75,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"alexanderadam\",\n    \"password\": \"Adam123(\"\n}",
+							"raw": "{\n    \"username\": \"adam\",\n    \"password\": \"Adam123(\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -215,12 +216,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{host}}:3000/quiz/",
+							"raw": "http://{{host}}:3502/quiz/",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
 							],
-							"port": "3000",
+							"port": "3502",
 							"path": [
 								"quiz",
 								""
@@ -284,16 +285,16 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://{{host}}:3000/quiz/{{quiz_id}}/start",
+							"raw": "http://{{host}}:3502/quiz/{{quiz_id}}/join",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
 							],
-							"port": "3000",
+							"port": "3502",
 							"path": [
 								"quiz",
 								"{{quiz_id}}",
-								"start"
+								"join"
 							]
 						}
 					},
@@ -397,6 +398,128 @@
 								"start"
 							]
 						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "quiz-query-servcie",
+			"item": [
+				{
+					"name": "get all quiz",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9995/api/v1/quiz",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9995",
+							"path": [
+								"api",
+								"v1",
+								"quiz"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get quiz question",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ququiz}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9995/api/v1/quiz/665724990bbfbd18913be1d1/questions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9995",
+							"path": [
+								"api",
+								"v1",
+								"quiz",
+								"665724990bbfbd18913be1d1",
+								"questions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get quiz detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9995/api/v1/quiz/66593ed400e32e0b1a6e010f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9995",
+							"path": [
+								"api",
+								"v1",
+								"quiz",
+								"66593ed400e32e0b1a6e010f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get  user answer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9995/api/v1/quiz/{{quiz_id}}/result",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9995",
+							"path": [
+								"api",
+								"v1",
+								"quiz",
+								"{{quiz_id}}",
+								"result"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}
