@@ -78,6 +78,19 @@ services:
       - 6379:6379
     networks:
       - ququiz
+
+  quiz-query-service:
+    image: lintangbirdas/quiz-query-service:v1 
+    container_name: quiz-query-service
+    restart: always
+    mem_limit: "2000mb"
+    cpus: 2
+    ports: 
+      - 3503:3503
+      - 6005:6005
+    networks:
+      - ququiz
+    
 networks:
   ququiz:
 
