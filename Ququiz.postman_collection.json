@@ -412,12 +412,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9995/api/v1/quiz",
+							"raw": "http://{{host}}:3503/api/v1/quiz",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "9995",
+							"port": "3503",
 							"path": [
 								"api",
 								"v1",
@@ -435,7 +435,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{ququiz}}",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -443,17 +443,17 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9995/api/v1/quiz/665724990bbfbd18913be1d1/questions",
+							"raw": "http://{{host}}:3503/api/v1/quiz/665b1a17a7fb775a02c1cf63/questions",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "9995",
+							"port": "3503",
 							"path": [
 								"api",
 								"v1",
 								"quiz",
-								"665724990bbfbd18913be1d1",
+								"665b1a17a7fb775a02c1cf63",
 								"questions"
 							]
 						}
@@ -466,17 +466,17 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9995/api/v1/quiz/66593ed400e32e0b1a6e010f",
+							"raw": "http://{{host}}:3503/api/v1/quiz/665b128d2da20959587d2455",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "9995",
+							"port": "3503",
 							"path": [
 								"api",
 								"v1",
 								"quiz",
-								"66593ed400e32e0b1a6e010f"
+								"665b128d2da20959587d2455"
 							]
 						}
 					},
@@ -498,17 +498,17 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:9995/api/v1/quiz/{{quiz_id}}/result",
+							"raw": "http://{{host}}:3503/api/v1/quiz/665b1a17a7fb775a02c1cf63/result",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "9995",
+							"port": "3503",
 							"path": [
 								"api",
 								"v1",
 								"quiz",
-								"{{quiz_id}}",
+								"665b1a17a7fb775a02c1cf63",
 								"result"
 							]
 						}
