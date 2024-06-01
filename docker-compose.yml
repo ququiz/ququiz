@@ -22,7 +22,7 @@ services:
       - 4501:4000
     env_file:
       - ./.env
-
+    restart: always
     depends_on:
       - postgres
     networks:
@@ -57,7 +57,7 @@ services:
       - 3502:3000
     env_file:
       - ./.env
-
+    restart: always
     depends_on:
       - authentications
       - dkron
@@ -112,6 +112,7 @@ services:
   scoring-service:
     image: lintangbirdas/scoring-service:v1
     container_name: ququiz-scoring-service
+    restart: always
     deploy:
       resources:
         limits:
@@ -128,6 +129,7 @@ services:
   notification-service:
     image: lintangbirdas/ququiz-notification-service-bagas:v1
     container_name: ququiz-notifications
+    restart: always
     deploy:
       resources:
         limits:
