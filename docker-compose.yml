@@ -1,11 +1,11 @@
-version: '3.8'
+version: "3.8"
 
 services:
   postgres:
     container_name: "ququiz-postgres"
-    image: 'postgres:alpine3.20'
+    image: "postgres:alpine3.20"
     ports:
-      - '5433:5432'
+      - "5433:5432"
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -16,22 +16,22 @@ services:
       - ququiz
   authentications:
     container_name: "ququiz-authentications"
-    image: 'alexadamm/ququiz-auth:v1.0'
+    image: "lintangbirdas/ququiz-auth-adam:v1.0"
     ports:
       - 3501:3000
       - 4501:4000
     env_file:
       - ./.env
-  
+
     depends_on:
       - postgres
     networks:
       - ququiz
   mongodb:
-    container_name: 'ququiz-mongo'
-    image: 'mongo:8.0.0-rc6' # kalo di vps mongo:4.4.27
+    container_name: ququiz-mongo
+    image: "mongo:8.0.0-rc6" # kalo di vps mongo:4.4.27
     ports:
-      - '27017:27017'
+      - "27017:27017"
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=admin
@@ -43,7 +43,7 @@ services:
     container_name: ququiz-dkron
     image: dkron/dkron
     ports:
-      - '9912:8080'
+      - "9912:8080"
     command: agent --server --bootstrap-expect=1 --node-name=node1
     environment:
       - DKRON_BACKEND_MACHINE_URL=dkron://dkron:8946
@@ -57,14 +57,14 @@ services:
       - 3502:3000
     env_file:
       - ./.env
-   
+
     depends_on:
       - authentications
       - dkron
       - mongodb
     networks:
       - ququiz
-  
+
   redis:
     image: redis:7.0.1-alpine3.16
     container_name: redis
@@ -78,19 +78,19 @@ services:
       - ququiz
 
   quiz-query-service:
-    image: lintangbirdas/quiz-query-service:v1 
+    image: lintangbirdas/quiz-query-service:v1
     container_name: quiz-query-service
     restart: always
     mem_limit: "2000mb"
     cpus: 2
-    ports: 
+    ports:
       - 3503:3503
       - 6005:6005
     depends_on:
+      - mongodb
       - rabbitmq
     networks:
       - ququiz
-
 
   rabbitmq:
     image: rabbitmq:3.13.1-management
@@ -108,7 +108,22 @@ services:
       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
     networks:
       - ququiz
-    
+
+  scoring-service:
+    image: lintangbirdas/scoring-service:v1
+    container_name: ququiz-scoring-service
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 500mb
+    ports:
+      - 3504:3504
+    depends_on:
+      - mongodb
+      - rabbitmq
+    networks:
+      - ququiz
+
 networks:
   ququiz:
-
