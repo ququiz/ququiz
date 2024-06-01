@@ -29,7 +29,7 @@ services:
       - ququiz
   mongodb:
     container_name: ququiz-mongo
-    image: "mongo:8.0.0-rc6" # kalo di vps mongo:4.4.27
+    image: "mongo:4.4.27" # kalo di vps mongo:4.4.27 (cpu nya gak support mongo:5 image keatas)
     ports:
       - "27017:27017"
     environment:
@@ -121,6 +121,21 @@ services:
       - 3504:3504
     depends_on:
       - mongodb
+      - rabbitmq
+    networks:
+      - ququiz
+
+  notification-service:
+    image: lintangbirdas/ququiz-notification-service-bagas:v1
+    container_name: ququiz-notifications
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 500mb
+    ports:
+      - 9581:3000
+    depends_on:
       - rabbitmq
     networks:
       - ququiz
