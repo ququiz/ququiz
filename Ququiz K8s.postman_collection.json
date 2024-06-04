@@ -1,0 +1,775 @@
+{
+	"info": {
+		"_postman_id": "5425cea7-112a-4591-9437-6b8b73559d16",
+		"name": "Ququiz K8s",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30538133",
+		"_collection_link": "https://orange-comet-51695.postman.co/workspace/netflik~35c0e208-27dd-4c2a-a67f-44e4ee221c8b/collection/30538133-5425cea7-112a-4591-9437-6b8b73559d16?action=share&source=collection_link&creator=30538133"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register creator",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();",
+									"var userid = responseJson.data.user.id;",
+									"pm.environment.set(\"userId\", userid)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullname\": \"Adam\",\n    \"email\": \"alexadam@gmail.com\",\n    \"username\": \"adam\",\n    \"password\": \"Adam123(\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}:{{k8s_lb_port}}/auth/users",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{k8s_lb_port}}",
+							"path": [
+								"auth",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "participant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();",
+									"var userid = responseJson.data.user.id;",
+									"pm.environment.set(\"userId\", userid)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullname\": \"lintang\",\n    \"email\": \"lintang@gmail.com\",\n    \"username\": \"lintang\",\n    \"password\": \"Lintang123(\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}:{{k8s_lb_port}}/auth/users",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{k8s_lb_port}}",
+							"path": [
+								"auth",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();",
+									"var accessToken = responseJson.data.accessToken;",
+									"var refreshToken = responseJson.data.refreshToken;",
+									"pm.environment.set(\"accessToken\", accessToken);",
+									"pm.environment.set(\"refreshToken\", refreshToken);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"adam\",\n    \"password\": \"Adam123(\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}:{{k8s_lb_port}}/auth/authentications",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{k8s_lb_port}}",
+							"path": [
+								"auth",
+								"authentications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login as participant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();",
+									"var accessToken = responseJson.data.accessToken;",
+									"var refreshToken = responseJson.data.refreshToken;",
+									"pm.environment.set(\"accessToken\", accessToken);",
+									"pm.environment.set(\"refreshToken\", refreshToken);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"lintang\",\n    \"password\": \"Lintang123(\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}:{{k8s_lb_port}}/auth/authentications",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{k8s_lb_port}}",
+							"path": [
+								"auth",
+								"authentications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"refreshToken\": {{refreshToken}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}:{{auth_port}}/authentications",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{auth_port}}",
+							"path": [
+								"authentications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"refreshToken\": {{refreshToken}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}:{{auth_port}}/authentications",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{auth_port}}",
+							"path": [
+								"authentications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}:{{auth_port}}/users/{{userId}}",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{auth_port}}",
+							"path": [
+								"users",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Quiz",
+			"item": [
+				{
+					"name": "Create Quiz",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();",
+									"var quiz_id = responseJson.data.created_quiz.id;",
+									"pm.environment.set(\"quiz_id\", quiz_id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"quizlintang\",\n  \"start_time\": \"2024-06-02T10:00:00.000Z\", // DATE\n  \"end_time\": \"2025-08-30T12:00:00.000Z\", // DATE\n  \"questions\": [{\n    \"question\": \"string\",\n    \"type\": \"MULTIPLE\", // ENUM(\"MULTIPLE\", \"ESSAY\")\n    \"weight\": 3,\n    \"choices\": [\n      {\n        \"text\": \"string\",\n        \"is_correct\": true // DEFAULT FALSE\n      },\n      {\n        \"text\": \"string2\",\n        \"is_correct\": false // DEFAULT FALSE\n      }\n    ]\n  },\n  {\n    \"question\": \"string\",\n    \"type\": \"ESSAY\", // ENUM(\"MULTIPLE\", \"ESSAY\")\n    \"weight\": 10,\n    \"essay_answer\": \"string\" // Will be used if type is \"ESSAY\"\n  }\n  ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-command/quiz/",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{k8s_lb_port}}",
+							"path": [
+								"quiz-command",
+								"quiz",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Quiz",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ // ALL PROPERTIES ARE OPTIONAL BTW\n  \"title\": \"quiz test2\",\n  \"start_time\": \"2024-06-19T10:00:00.000Z\", // DATE\n  \"end_time\": \"2024-07-30T12:00:00.000Z\", // DATE\n  \"questions\": [{\n    \"question\": \"string\",\n    \"type\": \"MULTIPLE\", // ENUM(\"MULTIPLE\", \"ESSAY\")\n    \"weight\": 3,\n    \"choices\": [\n      {\n        \"text\": \"string\",\n        \"is_correct\": true // DEFAULT FALSE\n      },\n      {\n        \"text\": \"string2\",\n        \"is_correct\": false // DEFAULT FALSE\n      }\n    ]\n  },\n  {\n    \"question\": \"string\",\n    \"type\": \"ESSAY\", // ENUM(\"MULTIPLE\", \"ESSAY\")\n    \"weight\": 10,\n    \"essay_answer\": \"string\" // Will be used if type is \"ESSAY\"\n  }\n  ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-command/quiz/{{quiz_id}}",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{k8s_lb_port}}",
+							"path": [
+								"quiz-command",
+								"quiz",
+								"{{quiz_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Join Quiz",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-command/quiz/{{quiz_id}}/join",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{k8s_lb_port}}",
+							"path": [
+								"quiz-command",
+								"quiz",
+								"{{quiz_id}}",
+								"join"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add New Participant",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"participant_id\": \"0c9dd769-7e4d-4f1f-a3c1-1e148931d7a4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-command/quiz/{{quiz_id}}/participant",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{k8s_lb_port}}",
+							"path": [
+								"quiz-command",
+								"quiz",
+								"{{quiz_id}}",
+								"participant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Quiz by Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-command/quiz/{{quiz_id}}",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{k8s_lb_port}}",
+							"path": [
+								"quiz-command",
+								"quiz",
+								"{{quiz_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Start Quiz (Force start all if owner, else start their own)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-command/quiz/{{quiz_id}}/start",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{k8s_lb_port}}",
+							"path": [
+								"quiz-command",
+								"quiz",
+								"{{quiz_id}}",
+								"start"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "quiz-query-servcie",
+			"item": [
+				{
+					"name": "get all quiz",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-query/api/v1/quiz",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{k8s_lb_port}}",
+							"path": [
+								"quiz-query",
+								"api",
+								"v1",
+								"quiz"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get quiz question",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-query/api/v1/quiz/665f03fe241b63da97830eb7/questions",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{k8s_lb_port}}",
+							"path": [
+								"quiz-query",
+								"api",
+								"v1",
+								"quiz",
+								"665f03fe241b63da97830eb7",
+								"questions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get quiz detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-query/api/v1/quiz/665f03fe241b63da97830eb7",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{k8s_lb_port}}",
+							"path": [
+								"quiz-query",
+								"api",
+								"v1",
+								"quiz",
+								"665f03fe241b63da97830eb7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get  user answer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-query/api/v1/quiz/665f03fe241b63da97830eb7/result",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{k8s_lb_port}}",
+							"path": [
+								"quiz-query",
+								"api",
+								"v1",
+								"quiz",
+								"665f03fe241b63da97830eb7",
+								"result"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get creted quiz",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-query/api/v1/quiz/mine",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{k8s_lb_port}}",
+							"path": [
+								"quiz-query",
+								"api",
+								"v1",
+								"quiz",
+								"mine"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "answer a question",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"choiceID\": \"665f03fe241b63da97830eba\",\n    \"essayAnswer\": \"string\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-query/api/v1/quiz/665f03fe241b63da97830eb7/questions/665f03fe241b63da97830eb8/answer",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{k8s_lb_port}}",
+							"path": [
+								"quiz-query",
+								"api",
+								"v1",
+								"quiz",
+								"665f03fe241b63da97830eb7",
+								"questions",
+								"665f03fe241b63da97830eb8",
+								"answer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get leaderboard",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}:{{k8s_lb_port}}/scoring/api/v1/scoring/665f03fe241b63da97830eb7/leaderboard",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{k8s_lb_port}}",
+							"path": [
+								"scoring",
+								"api",
+								"v1",
+								"scoring",
+								"665f03fe241b63da97830eb7",
+								"leaderboard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get quiz history",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-query/api/v1/quiz/history",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{k8s_lb_port}}",
+							"path": [
+								"quiz-query",
+								"api",
+								"v1",
+								"quiz",
+								"history"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
