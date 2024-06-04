@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "d396e14a-4350-42ad-ba08-bfa7f5a8e41f",
+		"_postman_id": "73bb32a2-c40a-44ea-b13d-b7d97cc788bc",
 		"name": "Ququiz",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "30538133",
-		"_collection_link": "https://orange-comet-51695.postman.co/workspace/netflik~35c0e208-27dd-4c2a-a67f-44e4ee221c8b/collection/30538133-d396e14a-4350-42ad-ba08-bfa7f5a8e41f?action=share&source=collection_link&creator=30538133"
+		"_exporter_id": "22922994"
 	},
 	"item": [
 		{
@@ -178,6 +177,41 @@
 			"name": "Quiz",
 			"item": [
 				{
+					"name": "Internal (Accessed by Dkron)",
+					"item": [
+						{
+							"name": "Start Quiz",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"time\": \"D-1\" // ENUM(D-1, T-30, T-1)\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{quiz_port}}/quiz-internal/{{quiz_id}}/start",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{quiz_port}}",
+									"path": [
+										"quiz-internal",
+										"{{quiz_id}}",
+										"start"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Create Quiz",
 					"event": [
 						{
@@ -301,7 +335,7 @@
 					"response": []
 				},
 				{
-					"name": "Add New Participant",
+					"name": "Add New Participant (for Quiz Owner)",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -341,7 +375,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Quiz by Id",
+					"name": "Delete Quiz by Id (for Quiz Owner)",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -371,7 +405,7 @@
 					"response": []
 				},
 				{
-					"name": "Start Quiz (Force start all if owner, else start their own)",
+					"name": "Participant Start Quiz (Force Start Quiz if Asked by Owner & Quiz Status is Not Started yet, else Start Their Own)",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -519,7 +553,10 @@
 					"name": "New Request",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				}
