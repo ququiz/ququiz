@@ -1,0 +1,7 @@
+curl -X POST -H "Content-Type: application/json" -d '{"time": "T-1"}'  http://ququiz-quiz:3000/quiz-internal/66666ba3da72ecde59f8534e/start
+
+
+curl http://ququiz-quiz:3000/
+
+
+
