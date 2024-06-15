@@ -18,7 +18,9 @@ docker exec -i -t jenkins-blueocean sh
 docker login 
 ```
 
-### Daftar queue RabbitMQ (tambahin di web)
+## After docker compose up -d
+
+### Daftar queue RabbitMQ ( wajibt tambahin di web setelah docker compose up -d)
 
 ```
 
@@ -38,4 +40,11 @@ routingKey: user-answer
 EXCHANGE_NAME: quiz-command-quiz-query
 
 ```
+
+
+### install curl di dkron 
+````
+docker exec -it ququiz-dkron sh
+apk add curl
+````
 
