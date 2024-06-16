@@ -1,16 +1,17 @@
 {
 	"info": {
-		"_postman_id": "73bb32a2-c40a-44ea-b13d-b7d97cc788bc",
+		"_postman_id": "d396e14a-4350-42ad-ba08-bfa7f5a8e41f",
 		"name": "Ququiz",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "22922994"
+		"_exporter_id": "30538133",
+		"_collection_link": "https://orange-comet-51695.postman.co/workspace/netflik~35c0e208-27dd-4c2a-a67f-44e4ee221c8b/collection/30538133-d396e14a-4350-42ad-ba08-bfa7f5a8e41f?action=share&source=collection_link&creator=30538133"
 	},
 	"item": [
 		{
 			"name": "Auth",
 			"item": [
 				{
-					"name": "Register",
+					"name": "Register creator",
 					"event": [
 						{
 							"listen": "test",
@@ -30,7 +31,49 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"fullname\": \"Adam\",\n    \"email\": \"alexadam@gmail.com\",\n    \"username\": \"adam\",\n    \"password\": \"Adam123(\"\n}",
+							"raw": "{\n    \"fullname\": \"lintang\",\n    \"email\": \"uyayiu123@gmail.com\",\n    \"username\": \"lintang\",\n    \"password\": \"Lintang1(\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3501/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3501",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "participant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();",
+									"var userid = responseJson.data.user.id;",
+									"pm.environment.set(\"userId\", userid)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullname\": \"lintang\",\n    \"email\": \"lintang@gmail.com\",\n    \"username\": \"lintang\",\n    \"password\": \"Lintang123(\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -74,7 +117,51 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"adam\",\n    \"password\": \"Adam123(\"\n}",
+							"raw": "{\n    \"username\": \"lintang\",\n    \"password\": \"Lintang1(\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}:{{auth_port}}/authentications",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{auth_port}}",
+							"path": [
+								"authentications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login as participant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();",
+									"var accessToken = responseJson.data.accessToken;",
+									"var refreshToken = responseJson.data.refreshToken;",
+									"pm.environment.set(\"accessToken\", accessToken);",
+									"pm.environment.set(\"refreshToken\", refreshToken);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"lintang\",\n    \"password\": \"Lintang123(\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -177,41 +264,6 @@
 			"name": "Quiz",
 			"item": [
 				{
-					"name": "Internal (Accessed by Dkron)",
-					"item": [
-						{
-							"name": "Start Quiz",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"time\": \"D-1\" // ENUM(D-1, T-30, T-1)\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://{{host}}:{{quiz_port}}/quiz-internal/{{quiz_id}}/start",
-									"protocol": "http",
-									"host": [
-										"{{host}}"
-									],
-									"port": "{{quiz_port}}",
-									"path": [
-										"quiz-internal",
-										"{{quiz_id}}",
-										"start"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
 					"name": "Create Quiz",
 					"event": [
 						{
@@ -242,7 +294,60 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"title\": \"string\",\n  \"start_time\": \"2024-05-19T10:00:00.000Z\", // DATE\n  \"end_time\": \"2024-05-30T12:00:00.000Z\", // DATE\n  \"questions\": [{\n    \"question\": \"string\",\n    \"type\": \"MULTIPLE\", // ENUM(\"MULTIPLE\", \"ESSAY\")\n    \"weight\": 3,\n    \"choices\": [\n      {\n        \"text\": \"string\",\n        \"is_correct\": true // DEFAULT FALSE\n      },\n      {\n        \"text\": \"string2\",\n        \"is_correct\": false // DEFAULT FALSE\n      }\n    ]\n  },\n  {\n    \"question\": \"string\",\n    \"type\": \"ESSAY\", // ENUM(\"MULTIPLE\", \"ESSAY\")\n    \"weight\": 10,\n    \"essay_answer\": \"string\" // Will be used if type is \"ESSAY\"\n  }\n  ]\n}\n",
+							"raw": "{\n  \"title\": \"distributed system started\",\n  \"start_time\": \"2024-06-10T22:02:00.000Z\", // DATE\n  \"end_time\": \"2024-06-15T15:35:00.000Z\", // DATE\n  \"questions\": [{\n    \"question\": \"string\",\n    \"type\": \"MULTIPLE\", // ENUM(\"MULTIPLE\", \"ESSAY\")\n    \"weight\": 3,\n    \"choices\": [\n      {\n        \"text\": \"string\",\n        \"is_correct\": true // DEFAULT FALSE\n      },\n      {\n        \"text\": \"string2\",\n        \"is_correct\": false // DEFAULT FALSE\n      }\n    ]\n  },\n  {\n    \"question\": \"string\",\n    \"type\": \"ESSAY\", // ENUM(\"MULTIPLE\", \"ESSAY\")\n    \"weight\": 10,\n    \"essay_answer\": \"string\" // Will be used if type is \"ESSAY\"\n  }\n  ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}:3502/quiz/",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "3502",
+							"path": [
+								"quiz",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Quiz Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();",
+									"var quiz_id = responseJson.data.created_quiz.id;",
+									"pm.environment.set(\"quiz_id\", quiz_id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"quizlintang1\",\n  \"start_time\": \"2024-06-03T10:00:00.000Z\", // DATE\n  \"end_time\": \"2025-08-30T12:00:00.000Z\", // DATE\n  \"questions\": [\n  ]\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -281,7 +386,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{ // ALL PROPERTIES ARE OPTIONAL BTW\n  \"title\": \"string\",\n  \"start_time\": \"2024-05-19T10:00:00.000Z\", // DATE\n  \"end_time\": \"2024-05-30T12:00:00.000Z\", // DATE\n  \"questions\": [{\n    \"question\": \"string\",\n    \"type\": \"MULTIPLE\", // ENUM(\"MULTIPLE\", \"ESSAY\")\n    \"weight\": 3,\n    \"choices\": [\n      {\n        \"text\": \"string\",\n        \"is_correct\": true // DEFAULT FALSE\n      },\n      {\n        \"text\": \"string2\",\n        \"is_correct\": false // DEFAULT FALSE\n      }\n    ]\n  },\n  {\n    \"question\": \"string\",\n    \"type\": \"ESSAY\", // ENUM(\"MULTIPLE\", \"ESSAY\")\n    \"weight\": 10,\n    \"essay_answer\": \"string\" // Will be used if type is \"ESSAY\"\n  }\n  ]\n}\n",
+							"raw": "{ // ALL PROPERTIES ARE OPTIONAL BTW\n  \"title\": \"quiz test2\",\n  \"start_time\": \"2024-05-19T10:00:00.000Z\", // DATE\n  \"end_time\": \"2024-05-30T12:00:00.000Z\", // DATE\n  \"questions\": [{\n    \"question\": \"string\",\n    \"type\": \"MULTIPLE\", // ENUM(\"MULTIPLE\", \"ESSAY\")\n    \"weight\": 3,\n    \"choices\": [\n      {\n        \"text\": \"string\",\n        \"is_correct\": true // DEFAULT FALSE\n      },\n      {\n        \"text\": \"string2\",\n        \"is_correct\": false // DEFAULT FALSE\n      }\n    ]\n  },\n  {\n    \"question\": \"string\",\n    \"type\": \"ESSAY\", // ENUM(\"MULTIPLE\", \"ESSAY\")\n    \"weight\": 10,\n    \"essay_answer\": \"string\" // Will be used if type is \"ESSAY\"\n  }\n  ]\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -318,6 +423,15 @@
 						},
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "http://{{host}}:3502/quiz/{{quiz_id}}/join",
 							"protocol": "http",
@@ -335,7 +449,7 @@
 					"response": []
 				},
 				{
-					"name": "Add New Participant (for Quiz Owner)",
+					"name": "Add New Participant",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -351,7 +465,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"participant_id\": 123\n}",
+							"raw": "{\n    \"participant_id\": \"0c9dd769-7e4d-4f1f-a3c1-1e148931d7a4\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -375,7 +489,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Quiz by Id (for Quiz Owner)",
+					"name": "Delete Quiz by Id",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -405,7 +519,7 @@
 					"response": []
 				},
 				{
-					"name": "Participant Start Quiz (Force Start Quiz if Asked by Owner & Quiz Status is Not Started yet, else Start Their Own)",
+					"name": "Start Quiz (Force start all if owner, else start their own)",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -443,10 +557,20 @@
 				{
 					"name": "get all quiz",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{host}}:3503/api/v1/quiz",
+							"raw": "http://{{host}}:3503/api/v1/quiz?limit=12&offset=0",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -456,6 +580,16 @@
 								"api",
 								"v1",
 								"quiz"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "12"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
 							]
 						}
 					},
@@ -477,7 +611,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{host}}:3503/api/v1/quiz/665b1a17a7fb775a02c1cf63/questions",
+							"raw": "http://{{host}}:3503/api/v1/quiz/666d8ae4755f08d87fddb18f/questions",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -487,7 +621,7 @@
 								"api",
 								"v1",
 								"quiz",
-								"665b1a17a7fb775a02c1cf63",
+								"666d8ae4755f08d87fddb18f",
 								"questions"
 							]
 						}
@@ -500,7 +634,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{host}}:3503/api/v1/quiz/665b128d2da20959587d2455",
+							"raw": "http://{{host}}:3503/api/v1/quiz/666d86593b205b6b790fc00c",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -510,7 +644,7 @@
 								"api",
 								"v1",
 								"quiz",
-								"665b128d2da20959587d2455"
+								"666d86593b205b6b790fc00c"
 							]
 						}
 					},
@@ -532,7 +666,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{host}}:3503/api/v1/quiz/665b1a17a7fb775a02c1cf63/result",
+							"raw": "http://{{host}}:3503/api/v1/quiz/66644648ad95b3eccbc0ab62/result",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -542,8 +676,198 @@
 								"api",
 								"v1",
 								"quiz",
-								"665b1a17a7fb775a02c1cf63",
+								"66644648ad95b3eccbc0ab62",
 								"result"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get creted quiz",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3503/api/v1/quiz/mine?limit=12&offset=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3503",
+							"path": [
+								"api",
+								"v1",
+								"quiz",
+								"mine"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "12"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "answer a question",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"choiceID\": \"666d4eafbef9cbe85fe745cf\",\n    \"essayAnswer\": \"string\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}:3503/api/v1/quiz/666d5182bef9cbe85fe745d3/questions/666d5182bef9cbe85fe745d7/answer",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "3503",
+							"path": [
+								"api",
+								"v1",
+								"quiz",
+								"666d5182bef9cbe85fe745d3",
+								"questions",
+								"666d5182bef9cbe85fe745d7",
+								"answer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get leaderboard",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}:3504/api/v1/scoring/666d5182bef9cbe85fe745d3/leaderboard",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "3504",
+							"path": [
+								"api",
+								"v1",
+								"scoring",
+								"666d5182bef9cbe85fe745d3",
+								"leaderboard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get leaderboard Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}:3504/healthz",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "3504",
+							"path": [
+								"healthz"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get quiz history",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}:3503/api/v1/quiz/history?limit=12&offset=0",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "3503",
+							"path": [
+								"api",
+								"v1",
+								"quiz",
+								"history"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "12"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
 							]
 						}
 					},
@@ -555,7 +879,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": ""
+							"raw": "http://{{host}}:3504/healthz",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "3504",
+							"path": [
+								"healthz"
+							]
 						}
 					},
 					"response": []

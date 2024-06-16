@@ -74,7 +74,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"fullname\": \"lintang\",\n    \"email\": \"lintang@gmail.com\",\n    \"username\": \"lintang\",\n    \"password\": \"Lintang123(\"\n}",
+							"raw": "{\n    \"fullname\": \"lintang\",\n    \"email\": \"lintangbirdasaputra23@gmail.com\",\n    \"username\": \"lintangbs\",\n    \"password\": \"Lintang123(\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -164,7 +164,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"lintang\",\n    \"password\": \"Lintang123(\"\n}",
+							"raw": "{\n    \"username\": \"lintangbs\",\n    \"password\": \"Lintang123(\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -248,13 +248,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{host}}:{{auth_port}}/users/{{userId}}",
+							"raw": "http://{{host}}:{{k8s_lb_port}}/auth/users/{{userId}}",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
 							],
-							"port": "{{auth_port}}",
+							"port": "{{k8s_lb_port}}",
 							"path": [
+								"auth",
 								"users",
 								"{{userId}}"
 							]
@@ -298,7 +299,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"title\": \"quizlintang\",\n  \"start_time\": \"2024-06-02T10:00:00.000Z\", // DATE\n  \"end_time\": \"2025-08-30T12:00:00.000Z\", // DATE\n  \"questions\": [{\n    \"question\": \"string\",\n    \"type\": \"MULTIPLE\", // ENUM(\"MULTIPLE\", \"ESSAY\")\n    \"weight\": 3,\n    \"choices\": [\n      {\n        \"text\": \"string\",\n        \"is_correct\": true // DEFAULT FALSE\n      },\n      {\n        \"text\": \"string2\",\n        \"is_correct\": false // DEFAULT FALSE\n      }\n    ]\n  },\n  {\n    \"question\": \"string\",\n    \"type\": \"ESSAY\", // ENUM(\"MULTIPLE\", \"ESSAY\")\n    \"weight\": 10,\n    \"essay_answer\": \"string\" // Will be used if type is \"ESSAY\"\n  }\n  ]\n}\n",
+							"raw": "{\n  \"title\": \"distributed system yoww \",\n  \"start_time\": \"2024-06-11T18:18:07+07:00\", // DATE\n  \"end_time\": \"2024-06-18T21:19:07+07:00\", // DATE\n  \"questions\": [{\n    \"question\": \"string\",\n    \"type\": \"MULTIPLE\", // ENUM(\"MULTIPLE\", \"ESSAY\")\n    \"weight\": 100,\n    \"choices\": [\n      {\n        \"text\": \"string\",\n        \"is_correct\": true // DEFAULT FALSE\n      },\n      {\n        \"text\": \"string2\",\n        \"is_correct\": false // DEFAULT FALSE\n      }\n    ]\n  },\n  {\n    \"question\": \"string\",\n    \"type\": \"ESSAY\", // ENUM(\"MULTIPLE\", \"ESSAY\")\n    \"weight\": 20,\n    \"essay_answer\": \"string\" // Will be used if type is \"ESSAY\"\n  }\n  ]\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -338,7 +339,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{ // ALL PROPERTIES ARE OPTIONAL BTW\n  \"title\": \"quiz test2\",\n  \"start_time\": \"2024-06-19T10:00:00.000Z\", // DATE\n  \"end_time\": \"2024-07-30T12:00:00.000Z\", // DATE\n  \"questions\": [{\n    \"question\": \"string\",\n    \"type\": \"MULTIPLE\", // ENUM(\"MULTIPLE\", \"ESSAY\")\n    \"weight\": 3,\n    \"choices\": [\n      {\n        \"text\": \"string\",\n        \"is_correct\": true // DEFAULT FALSE\n      },\n      {\n        \"text\": \"string2\",\n        \"is_correct\": false // DEFAULT FALSE\n      }\n    ]\n  },\n  {\n    \"question\": \"string\",\n    \"type\": \"ESSAY\", // ENUM(\"MULTIPLE\", \"ESSAY\")\n    \"weight\": 10,\n    \"essay_answer\": \"string\" // Will be used if type is \"ESSAY\"\n  }\n  ]\n}\n",
+							"raw": "{ // ALL PROPERTIES ARE OPTIONAL BTW\n  \"title\": \"distributed system\",\n  \"start_time\": \"2024-06-19T10:00:00.000Z\", // DATE\n  \"end_time\": \"2024-07-30T12:00:00.000Z\", // DATE\n  \"questions\": [{\n    \"question\": \"raft consensus algorithm\",\n    \"type\": \"MULTIPLE\", // ENUM(\"MULTIPLE\", \"ESSAY\")\n    \"weight\": 3,\n    \"choices\": [\n      {\n        \"text\": \"string\",\n        \"is_correct\": true // DEFAULT FALSE\n      },\n      {\n        \"text\": \"string2\",\n        \"is_correct\": false // DEFAULT FALSE\n      }\n    ]\n  },\n  {\n    \"question\": \"paxos \",\n    \"type\": \"ESSAY\", // ENUM(\"MULTIPLE\", \"ESSAY\")\n    \"weight\": 10,\n    \"essay_answer\": \"string\" // Will be used if type is \"ESSAY\"\n  }\n  ]\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -514,10 +515,20 @@
 				{
 					"name": "get all quiz",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-query/api/v1/quiz",
+							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-query/api/v1/quiz?limit=12&offset=0",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -528,6 +539,16 @@
 								"api",
 								"v1",
 								"quiz"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "12"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
 							]
 						}
 					},
@@ -535,6 +556,52 @@
 				},
 				{
 					"name": "get quiz question",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-query/api/v1/quiz/666ebd95d57e4a08f7ae4878/questions",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{k8s_lb_port}}",
+							"path": [
+								"quiz-query",
+								"api",
+								"v1",
+								"quiz",
+								"666ebd95d57e4a08f7ae4878",
+								"questions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get quiz detail",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -549,7 +616,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-query/api/v1/quiz/665f03fe241b63da97830eb7/questions",
+							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-query/api/v1/quiz/666797a34ac253b39171182b",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -560,31 +627,7 @@
 								"api",
 								"v1",
 								"quiz",
-								"665f03fe241b63da97830eb7",
-								"questions"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get quiz detail",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-query/api/v1/quiz/665f03fe241b63da97830eb7",
-							"protocol": "http",
-							"host": [
-								"{{host}}"
-							],
-							"port": "{{k8s_lb_port}}",
-							"path": [
-								"quiz-query",
-								"api",
-								"v1",
-								"quiz",
-								"665f03fe241b63da97830eb7"
+								"666797a34ac253b39171182b"
 							]
 						}
 					},
@@ -606,7 +649,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-query/api/v1/quiz/665f03fe241b63da97830eb7/result",
+							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-query/api/v1/quiz/666d539eed25031b0d94741e/result",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -617,7 +660,7 @@
 								"api",
 								"v1",
 								"quiz",
-								"665f03fe241b63da97830eb7",
+								"666d539eed25031b0d94741e",
 								"result"
 							]
 						}
@@ -640,7 +683,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-query/api/v1/quiz/mine",
+							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-query/api/v1/quiz/mine?limit=12&offset=1",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -652,6 +695,16 @@
 								"v1",
 								"quiz",
 								"mine"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "12"
+								},
+								{
+									"key": "offset",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -674,7 +727,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"choiceID\": \"665f03fe241b63da97830eba\",\n    \"essayAnswer\": \"string\"\n}\n",
+							"raw": "{\n    \"choiceID\": \"666831b0d57e4a08f7ae4866\",\n    \"essayAnswer\": \"string\"\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -682,7 +735,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-query/api/v1/quiz/665f03fe241b63da97830eb7/questions/665f03fe241b63da97830eb8/answer",
+							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-query/api/v1/quiz/666831b0d57e4a08f7ae4864/questions/666831b0d57e4a08f7ae4865/answer",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -693,9 +746,9 @@
 								"api",
 								"v1",
 								"quiz",
-								"665f03fe241b63da97830eb7",
+								"666831b0d57e4a08f7ae4864",
 								"questions",
-								"665f03fe241b63da97830eb8",
+								"666831b0d57e4a08f7ae4865",
 								"answer"
 							]
 						}
@@ -718,7 +771,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{host}}:{{k8s_lb_port}}/scoring/api/v1/scoring/665f03fe241b63da97830eb7/leaderboard",
+							"raw": "http://{{host}}:{{k8s_lb_port}}/scoring/api/v1/scoring/666d8faaed25031b0d947430/leaderboard",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -729,8 +782,68 @@
 								"api",
 								"v1",
 								"scoring",
-								"665f03fe241b63da97830eb7",
+								"666d8faaed25031b0d947430",
 								"leaderboard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get leaderboard Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}:{{k8s_lb_port}}/scoring/healthz",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{k8s_lb_port}}",
+							"path": [
+								"scoring",
+								"healthz"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get leaderboard Copy 2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-query/healthz",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{k8s_lb_port}}",
+							"path": [
+								"quiz-query",
+								"healthz"
 							]
 						}
 					},
@@ -752,7 +865,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-query/api/v1/quiz/history",
+							"raw": "http://{{host}}:{{k8s_lb_port}}/quiz-query/api/v1/quiz/history?limit=12&offset=0",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -764,6 +877,16 @@
 								"v1",
 								"quiz",
 								"history"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "12"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
 							]
 						}
 					},
